@@ -43,11 +43,11 @@ def ffTransform(signals):
 signal  = signalsGenerator(n,w,N)
 
 
-#plt.plot(signal)
-#plt.title('Random generated signals')
-#plt.xlabel('time')
-#plt.ylabel('signal')
-#plt.figure()
+plt.plot(signal)
+plt.title('Random generated signals')
+plt.xlabel('time')
+plt.ylabel('signal')
+plt.figure()
 
 plt.plot(ffTransform(signal))
 plt.title('Fast Fourier Transform')
