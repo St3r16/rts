@@ -3,12 +3,16 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput, Button } from 'react-n
 import Genetic from './Genetic'
 
 export default function App() {
-  const [a, setA] = useState(null);
-  const [b, setB] = useState(null);
-  const [c, setC] = useState(null);
-  const [d, setD] = useState(null);
-  const [y, setY] = useState(null);
-  const [result, setResult] = useState('[]', []);
+  const [a, setNumber] = useState (null)
+  const [b, setNumber] = useState(null);
+  const [c, setNumber] = useState(null);
+  const [d, setNumber] = useState(null);
+  const [y, setNumber] = useState(null);
+  const [result, setResult] = useState('click compute to calculate how many times the task was completed in 5 seconds ', []);
+
+  function getRandomInRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
   return (
     <SafeAreaView>
@@ -21,42 +25,54 @@ export default function App() {
         />
         <Text style={styles.expression}>{'*x1 + '}</Text>
         <TextInput style={styles.expression}
-          onChangeText={setB}
+         
           value={b}
           placeholder="b"
           keyboardType="numeric"
         />
         <Text style={styles.expression}>{'*x2 + '}</Text>
         <TextInput style={styles.expression}
-          onChangeText={setC}
+        
           value={c}
           placeholder="c"
           keyboardType="numeric"
         />
         <Text style={styles.expression}>{'*x3 + '}</Text>
         <TextInput style={styles.expression}
-          onChangeText={setD}
+         
           value={d}
           placeholder="d"
           keyboardType="numeric"
         />
         <Text style={styles.expression}>{'*x4 = '}</Text>
         <TextInput style={styles.expression}
-          onChangeText={setY}
+         
           value={y}
           placeholder="Y"
           keyboardType="numeric"
         />
       </View>
       <Text style={styles.result}>
-        {`[x1, x2, x3, x4] = ${result}`}
+        {` Total cases completed =  ${result}`}
       </Text>
       <View style={styles.btn}>
         <Button
           title="Compute"
           color="white"
-          onPress={() => setResult(new Genetic([a, b, c, d], y).solve())}
+          onPress={() => {
+            setResult(function testCases () {
+              let totalCaseResult = 0;
+              let starttime  = Date.now;
+              while ((Date.now() - startTime) < 5000) {
+                setNumber(getRandomInRange)
+                new Genetic([a, b, c, d], y).solve()
+                ++totalCaseResult ;
+              }
+              return totalCaseResult
+            })
+          }}
         />
+        
       </View>
 
     </SafeAreaView>
