@@ -1,5 +1,6 @@
 import numpy as np      # math operations
-import matplotlib.pyplot as plt     #graphs
+import time
+from dft import dft
 
 n = 10      # harmonics
 w = 2700    #frequency
@@ -17,41 +18,40 @@ def signalsGenerator(n,w,N):
     return signals
 
 
-def fCoeff(pk, N):
-    exp = 2*np.pi*pk/N
+def fCoeff(k, N):
+    exp = 2.0 * np.pi * k / N
     return complex(np.cos(exp), -np.sin(exp))
 
 
 # Fast  Fourier Transform
 def ffTransform(signals):
     N = len(signals)
-    l = int(N/2)
-    spect = [0] * N
-
-    if N ==1:
+    if N == 1 :
         return signals
+    spectrum = [0] * N
+
     evens = ffTransform(signals[::2])
     odds = ffTransform(signals[1::2])
 
+    l = int(N/2)
     for k in range(l):
-        spect[k] = evens[k] + odds[k] * fCoeff(k, N)
-        spect[k + l] = evens[k] - odds[k] * fCoeff(k, N)
+        exp = odds[k] * fCoeff(k, N)
 
-    return spect
+        spectrum[k] = evens[k] + exp
+        spectrum[k + l] = evens[k] - exp
+
+    return spectrum
 
 
-signal  = signalsGenerator(n,w,N)
+sigs = signalsGenerator(n, w, N)
+
+start = time.time()
+dft(sigs)
+print("discrete Fourier transform time: {}".format(time.time() - start))
 
 
-plt.plot(signal)
-plt.title('Random generated signals')
-plt.xlabel('time')
-plt.ylabel('signal')
-plt.figure()
+start = time.time()
+ffTransform(sigs)
+print("fast Fourier transform time: {}".format(time.time() - start))
 
-plt.plot(ffTransform(signal))
-plt.title('Fast Fourier Transform')
-plt.xlabel('p')
-plt.ylabel('F(p)')
-plt.show()
 
